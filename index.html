@@ -4,103 +4,249 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Namal — Blog</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #111111; --surface: #1A1A1A; --text: #E8E4DC;
-    --muted: #6E6A62; --border: #2A2A2A; --accent: #C8A96E;
+    --bg: #0C0F0F;
+    --surface: #131818;
+    --surface2: #182020;
+    --text: #E2EAE8;
+    --muted: #5C706C;
+    --border: #1E2929;
+    --accent: #2DD4BF;
+    --accent-dim: #1A7A6E;
+    --accent-glow: rgba(45,212,191,0.08);
   }
   html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
-    max-width: 1000px; margin: 0 auto; padding: 36px 32px;
+    max-width: 1040px; margin: 0 auto; padding: 32px 36px;
     display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
   }
-  .logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); text-decoration: none; }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.15s; }
+  .logo {
+    font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text);
+    text-decoration: none; letter-spacing: -0.01em;
+  }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.18s; }
   .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+  .nav-cta {
+    font-size: 12px; font-weight: 600; color: var(--accent) !important;
+    border: 1px solid var(--accent-dim); padding: 7px 18px;
+    text-transform: uppercase !important; letter-spacing: 0.08em !important;
+    transition: background 0.18s, color 0.18s !important;
+  }
+  .nav-cta:hover { background: var(--accent-glow) !important; }
 
-  /* HERO */
-  .hero { max-width: 1000px; margin: 0 auto; padding: 80px 32px 64px; border-bottom: 1px solid var(--border); }
-  .hero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; transform: translateY(22px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
-  .hero-label.visible { opacity: 1; transform: translateY(0); }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 58px); font-weight: 400; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; opacity: 0; transform: translateY(28px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1) 0.1s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.1s; }
+  /* ── HERO ── */
+  .hero {
+    max-width: 1040px; margin: 0 auto; padding: 80px 36px 72px;
+    border-top: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -120px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 28px;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); display: block; }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 400; line-height: 1.08; letter-spacing: -0.02em;
+    margin-bottom: 28px; max-width: 720px;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1) 0.1s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.1s;
+  }
   .hero h1.visible { opacity: 1; transform: translateY(0); }
   .hero h1 em { font-style: italic; color: var(--accent); }
-  .hero p { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.8; font-weight: 300; opacity: 0; transform: translateY(22px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1) 0.22s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.22s; }
-  .hero p.visible { opacity: 1; transform: translateY(0); }
 
-  /* POSTS */
-  .posts-section { max-width: 1000px; margin: 0 auto; padding: 56px 32px 80px; }
-  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 36px; opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
-  .section-label.visible { opacity: 1; transform: translateY(0); }
-  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; }
-  .post-card { background: var(--surface); text-decoration: none; color: inherit; display: flex; flex-direction: column; opacity: 0; transform: translateY(32px); transition: background 0.2s; }
-  .post-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), background 0.2s; }
-  .post-card:hover { background: #202020; }
-  .post-card img { width: 100%; height: 200px; object-fit: cover; display: block; filter: brightness(0.85); transition: filter 0.4s cubic-bezier(0.16,1,0.3,1); }
-  .post-card:hover img { filter: brightness(1); }
-  .post-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-  .post-card-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
-  .post-card-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 400; line-height: 1.35; letter-spacing: -0.01em; flex: 1; }
-  .post-card-meta { font-size: 12px; color: var(--muted); font-weight: 300; margin-top: 16px; }
+  .hero-sub {
+    font-size: 15px; color: var(--muted); max-width: 460px;
+    line-height: 1.85; font-weight: 300;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1) 0.22s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.22s;
+  }
+  .hero-sub.visible { opacity: 1; transform: translateY(0); }
 
-  /* ABOUT */
-  .about-section { max-width: 1000px; margin: 0 auto; padding: 0 32px 100px; border-top: 1px solid var(--border); }
-  .about-inner { padding-top: 72px; }
-  .about-left { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); margin-bottom: 40px; }
+  /* ── FEATURED POST ── */
+  .featured-section { max-width: 1040px; margin: 0 auto; padding: 0 36px 56px; }
+  .featured-card {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    background: var(--surface); text-decoration: none; color: inherit;
+    border: 1px solid var(--border); overflow: hidden;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
+  }
+  .featured-card.visible { opacity: 1; transform: translateY(0); }
+  .featured-card:hover { border-color: var(--accent-dim); }
+  .featured-img {
+    width: 100%; height: 320px; object-fit: cover;
+    display: block; filter: brightness(0.75) saturate(0.8);
+    transition: filter 0.5s ease;
+  }
+  .featured-card:hover .featured-img { filter: brightness(0.9) saturate(1); }
+  .featured-body { padding: 40px 36px; display: flex; flex-direction: column; justify-content: space-between; }
+  .featured-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .featured-label::after { content: 'FEATURED'; font-size: 9px; background: var(--accent-glow); border: 1px solid var(--accent-dim); color: var(--accent); padding: 2px 8px; letter-spacing: 0.12em; }
+  .featured-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 400; line-height: 1.25; letter-spacing: -0.01em;
+    flex: 1; margin-bottom: 24px;
+  }
+  .featured-meta { font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: 0.02em; }
+  .featured-arrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-top: 24px; opacity: 0.7; transition: opacity 0.2s, gap 0.2s;
+  }
+  .featured-card:hover .featured-arrow { opacity: 1; gap: 14px; }
+
+  /* ── POSTS GRID ── */
+  .posts-section { max-width: 1040px; margin: 0 auto; padding: 0 36px 80px; }
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 32px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .section-header.visible { opacity: 1; transform: translateY(0); }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .section-line { flex: 1; height: 1px; background: var(--border); margin: 0 20px; }
+
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1px; background: var(--border); }
+  .post-card {
+    background: var(--bg); text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(24px);
+    transition: background 0.2s;
+  }
+  .post-card.visible {
+    opacity: 1; transform: translateY(0);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), background 0.2s;
+  }
+  .post-card:hover { background: var(--surface2); }
+  .post-card-img-wrap { overflow: hidden; }
+  .post-card img {
+    width: 100%; height: 190px; object-fit: cover; display: block;
+    filter: brightness(0.78) saturate(0.7);
+    transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .post-card:hover img { filter: brightness(0.92) saturate(1); transform: scale(1.03); }
+  .post-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; border-top: 2px solid transparent; transition: border-color 0.2s; }
+  .post-card:hover .post-card-body { border-color: var(--accent); }
+  .post-card-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; opacity: 0.8; }
+  .post-card-title { font-family: 'DM Serif Display', serif; font-size: 19px; font-weight: 400; line-height: 1.32; flex: 1; }
+  .post-card-meta { font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 16px; letter-spacing: 0.02em; }
+
+  /* ── ABOUT ── */
+  .about-section {
+    max-width: 1040px; margin: 0 auto; padding: 72px 36px 96px;
+    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 340px 1fr; gap: 80px;
+    align-items: start;
+  }
+  .about-left { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; }
   .about-left.visible { opacity: 1; transform: translateY(0); }
-  .about-right { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.18s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.18s; max-width: 620px; }
-  .about-right.visible { opacity: 1; transform: translateY(0); }
-
-  .about-section .section-label { margin-bottom: 0; padding-top: 56px; }
-  .about-heading { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 72px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; }
+  .about-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .about-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+  .about-heading { font-family: 'DM Serif Display', serif; font-size: clamp(36px, 4vw, 54px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; }
   .about-heading em { font-style: italic; color: var(--accent); display: block; }
 
+  .about-right { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s; }
+  .about-right.visible { opacity: 1; transform: translateY(0); }
   .about-body p { font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 18px; }
   .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-  .tag { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border: 1px solid var(--border); color: var(--muted); }
+  .tag {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 14px; border: 1px solid var(--border); color: var(--muted);
+    transition: border-color 0.18s, color 0.18s;
+  }
+  .tag:hover { border-color: var(--accent-dim); color: var(--accent); }
 
-  /* FOOTER */
-  footer { max-width: 1000px; margin: 0 auto; padding: 24px 32px 48px; border-top: 1px solid var(--border); }
-  footer p { font-size: 12px; color: var(--muted); }
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1040px; margin: 0 auto; padding: 24px 36px 48px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer p { font-size: 12px; color: var(--muted); font-weight: 400; }
+  .footer-accent { font-size: 11px; color: var(--accent-dim); letter-spacing: 0.06em; }
 
-  @media (max-width: 700px) {
-    .about-inner { grid-template-columns: 1fr; gap: 40px; }
-    nav { padding: 24px 20px; }
-    .hero, .posts-section, .about-section { padding-left: 20px; padding-right: 20px; }
+  @media (max-width: 768px) {
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-img { height: 220px; }
+    .about-section { grid-template-columns: 1fr; gap: 40px; }
+    nav, .hero, .featured-section, .posts-section, .about-section { padding-left: 20px; padding-right: 20px; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="logo">Namal</a>
+  <a href="index.html" class="logo">Namal<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#posts" class="active">Writing</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
 
 <div class="hero">
-  <p class="hero-label">Blog</p>
+  <p class="hero-eyebrow">Blog</p>
   <h1>Notes on ML, <em>motorsport,</em><br>and building things.</h1>
-  <p>I write about machine learning, the honest side of job searching, F1 strategy, and whatever else is on my mind.</p>
+  <p class="hero-sub">I write about machine learning, the honest side of job searching, F1 strategy, and whatever else is on my mind.</p>
 </div>
 
+<section class="featured-section">
+  <a href="posts/demo-post.html" class="featured-card">
+    <img src="posts/images/my-first-post.jpg" alt="Post cover" class="featured-img" />
+    <div class="featured-body">
+      <div>
+        <p class="featured-label">Machine Learning</p>
+        <p class="featured-title">Your first post title goes here — make it worth the click</p>
+      </div>
+      <div>
+        <p class="featured-meta">Jun 18, 2025 · 5 min read</p>
+        <p class="featured-arrow">Read post →</p>
+      </div>
+    </div>
+  </a>
+</section>
+
 <section class="posts-section" id="posts">
-  <p class="section-label">All posts</p>
+  <div class="section-header">
+    <span class="section-label">All posts</span>
+    <span class="section-line"></span>
+  </div>
   <div class="posts-grid">
 
     <!-- PASTE A NEW POST CARD HERE FOR EACH POST YOU WRITE -->
     <a href="posts/demo-post.html" class="post-card">
-      <img src="posts/images/my-first-post.jpg" alt="Post cover image" />
+      <div class="post-card-img-wrap">
+        <img src="posts/images/my-first-post.jpg" alt="Post cover" />
+      </div>
       <div class="post-card-body">
         <p class="post-card-tag">Machine Learning</p>
         <p class="post-card-title">Your first post title goes here</p>
@@ -112,42 +258,41 @@
 </section>
 
 <section class="about-section" id="about">
-  <p class="section-label visible" style="opacity:1;transform:none;">About</p>
-  <div class="about-inner">
-    <div class="about-left">
-      <h2 class="about-heading">Self-taught.<br><em>Always curious.</em></h2>
+  <div class="about-left">
+    <p class="about-eyebrow">About</p>
+    <h2 class="about-heading">Self-taught.<br><em>Always curious.</em></h2>
+  </div>
+  <div class="about-right">
+    <div class="about-body">
+      <p>I'm a machine learning engineer who got here by building things, not collecting certificates. Computer vision, CNNs, real client projects — that's what taught me ML, not a classroom.</p>
+      <p>When I'm not training models or pushing PRs, I'm watching F1 and thinking about what race strategy and machine learning have more in common than people realise.</p>
+      <p>Currently looking for remote ML roles. If something I wrote resonated — let's talk.</p>
     </div>
-    <div class="about-right">
-      <div class="about-body">
-        <p>I'm a machine learning engineer who got here by building things, not collecting certificates. Computer vision, CNNs, real client projects — that's what taught me ML, not a classroom.</p>
-        <p>When I'm not training models or pushing PRs, I'm watching F1 and thinking about what race strategy and machine learning have more in common than people realise.</p>
-        <p>Currently looking for remote ML roles. If something I wrote resonated — let's talk.</p>
-      </div>
-      <div class="about-tags">
-        <span class="tag">TensorFlow</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">CNNs</span>
-        <span class="tag">scikit-learn</span>
-        <span class="tag">F1</span>
-        <span class="tag">Open Source</span>
-      </div>
+    <div class="about-tags">
+      <span class="tag">TensorFlow</span>
+      <span class="tag">Computer Vision</span>
+      <span class="tag">CNNs</span>
+      <span class="tag">scikit-learn</span>
+      <span class="tag">F1</span>
+      <span class="tag">Open Source</span>
     </div>
   </div>
 </section>
 
 <footer>
   <p>© 2025 Namal</p>
+  <p class="footer-accent">ML Engineer · Open to remote roles</p>
 </footer>
 
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
 
   document.querySelectorAll(
-    '.hero-label, .hero h1, .hero p, .section-label, .post-card, .about-left, .about-right'
+    '.hero-eyebrow, .hero h1, .hero-sub, .featured-card, .section-header, .post-card, .about-left, .about-right'
   ).forEach((el, i) => {
-    if (el.classList.contains('post-card')) el.style.transitionDelay = (i * 0.08) + 's';
+    if (el.classList.contains('post-card')) el.style.transitionDelay = (i * 0.09) + 's';
     observer.observe(el);
   });
 </script>
