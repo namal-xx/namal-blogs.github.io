@@ -3,127 +3,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Namal</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Namal — Contact</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #111111; --surface: #1A1A1A; --text: #E8E4DC;
-    --muted: #6E6A62; --border: #2A2A2A; --accent: #C8A96E;
+    --bg: #0C0F0F;
+    --surface: #131818;
+    --surface2: #182020;
+    --text: #E2EAE8;
+    --muted: #5C706C;
+    --border: #1E2929;
+    --accent: #2DD4BF;
+    --accent-dim: #1A7A6E;
+    --accent-glow: rgba(45,212,191,0.10);
   }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh; }
 
+  /* ── NAV (identical to index) ── */
   nav {
-    max-width: 1000px; margin: 0 auto; padding: 36px 32px;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border); width: 100%;
-  }
-  .logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); text-decoration: none; }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.15s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-
-  .contact-wrap {
-    max-width: 1000px; margin: 0 auto; padding: 80px 32px 100px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; flex: 1; width: 100%;
-  }
-
-  .contact-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .contact-left.visible { opacity: 1; transform: translateX(0); }
-
-  .contact-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(52px, 7vw, 88px);
-    font-weight: 400;
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-    color: var(--text);
-  }
-  .contact-heading em { font-style: italic; color: var(--muted); display: block; }
-
-  .contact-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; }
-  .contact-right.visible { opacity: 1; transform: translateX(0); }
-
-  .contact-label {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 32px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .contact-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  .contact-link {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 22px 0;
+    padding: 0 5%; height: 68px;
+    background: rgba(12,15,15,0.85);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    color: var(--text);
-    transition: padding-left 0.25s ease, color 0.2s;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s ease, transform 0.5s ease, padding-left 0.25s ease, color 0.2s;
   }
-  .contact-link.visible { opacity: 1; transform: translateY(0); }
-  .contact-link:hover { padding-left: 12px; color: var(--accent); }
-  .contact-link:hover .link-arrow { transform: translate(3px, -3px); }
+  .logo-block { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--text); }
+  .logo-icon {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif; font-size: 16px; color: #0C0F0F;
+  }
+  .logo-name { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+  .nav-center {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 4px; list-style: none; align-items: center;
+  }
+  .nav-center li a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.04em; padding: 6px 14px;
+    position: relative; transition: color 0.18s;
+  }
+  .nav-center li a::after {
+    content: ''; position: absolute; bottom: -2px; left: 14px; right: 14px;
+    height: 2px; background: var(--accent); border-radius: 2px;
+    transform: scaleX(0); transform-origin: center;
+    transition: transform 0.22s cubic-bezier(0.16,1,0.3,1);
+  }
+  .nav-center li a:hover { color: var(--text); }
+  .nav-center li a.active { color: var(--text); }
+  .nav-center li a.active::after { transform: scaleX(1); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-btn {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    padding: 8px 20px; border-radius: 6px;
+    background: var(--accent); color: #0C0F0F;
+    text-decoration: none; transition: opacity 0.18s, transform 0.18s;
+  }
+  .nav-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-  .link-name { font-size: 20px; font-weight: 400; letter-spacing: -0.01em; }
-  .link-arrow {
-    font-size: 18px; color: var(--accent);
-    transition: transform 0.2s ease;
-    display: inline-block;
+  /* ── PAGE WRAPPER ── */
+  .page {
+    min-height: 100vh;
+    padding-top: 68px;
+    display: flex; flex-direction: column;
   }
 
-  footer { max-width: 1000px; margin: 0 auto; padding: 24px 32px 48px; border-top: 1px solid var(--border); width: 100%; }
+  /* ── CONTACT HERO ── */
+  .contact-hero {
+    padding: 80px 8% 64px;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .contact-hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -80px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .contact-hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 28px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .contact-hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .contact-hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); display: block; }
+
+  .contact-hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 68px);
+    font-weight: 400; line-height: 1.08; letter-spacing: -0.025em;
+    max-width: 680px; margin-bottom: 20px;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s;
+  }
+  .contact-hero h1.visible { opacity: 1; transform: translateY(0); }
+  .contact-hero h1 em { font-style: italic; color: var(--accent); }
+
+  .contact-hero-sub {
+    font-size: 15px; color: var(--muted); max-width: 460px;
+    line-height: 1.85; font-weight: 300;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.85s ease 0.22s, transform 0.85s ease 0.22s;
+  }
+  .contact-hero-sub.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── CONTACT BODY ── */
+  .contact-body {
+    flex: 1;
+    display: grid; grid-template-columns: 1fr 1.1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Left — info panel */
+  .contact-info {
+    padding: 64px 8% 64px;
+    border-right: 1px solid var(--border);
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+  .contact-info.visible { opacity: 1; transform: translateY(0); }
+
+  .info-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 32px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .info-label::before { content: ''; width: 20px; height: 1px; background: var(--muted); }
+
+  .contact-item {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 22px 0; border-bottom: 1px solid var(--border);
+  }
+  .contact-item:first-of-type { border-top: 1px solid var(--border); }
+  .contact-item-key { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .contact-item-val {
+    font-size: 14px; font-weight: 500; color: var(--text);
+    text-decoration: none; transition: color 0.18s;
+  }
+  .contact-item-val:hover { color: var(--accent); }
+
+  .availability-block {
+    margin-top: 40px; padding: 24px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 2px;
+  }
+  .availability-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .avail-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .avail-status { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.06em; }
+  .avail-detail { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  .social-row { display: flex; gap: 10px; margin-top: 32px; }
+  .social-btn {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 9px 18px; border: 1px solid var(--border); color: var(--muted);
+    text-decoration: none; border-radius: 4px;
+    transition: border-color 0.18s, color 0.18s;
+  }
+  .social-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
+
+  /* Right — form panel */
+  .contact-form-wrap {
+    padding: 64px 8%;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-form-wrap.visible { opacity: 1; transform: translateY(0); }
+
+  .form-label-top {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 32px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .form-label-top::before { content: ''; width: 20px; height: 1px; background: var(--muted); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 400;
+    padding: 13px 16px; border-radius: 4px; outline: none; width: 100%;
+    transition: border-color 0.18s;
+    appearance: none; -webkit-appearance: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--muted); }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--accent-dim); }
+  .form-group textarea { resize: vertical; min-height: 130px; }
+  .form-group select option { background: var(--surface); color: var(--text); }
+
+  .submit-btn {
+    width: 100%; padding: 15px 30px;
+    background: var(--accent); color: #0C0F0F;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    border: none; border-radius: 6px; cursor: pointer;
+    transition: opacity 0.18s, transform 0.18s;
+    margin-top: 8px;
+  }
+  .submit-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  /* Success state */
+  .form-success {
+    display: none; text-align: center; padding: 48px 24px;
+  }
+  .form-success.show { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .success-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--accent-glow); border: 1px solid var(--accent-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .success-title { font-family: 'DM Serif Display', serif; font-size: 26px; }
+  .success-sub { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 320px; }
+
+  /* ── FOOTER ── */
+  footer {
+    width: 100%; padding: 24px 8% 40px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
   footer p { font-size: 12px; color: var(--muted); }
+  .footer-right { font-size: 11px; color: var(--accent-dim); letter-spacing: 0.06em; }
+
+  @media (max-width: 900px) {
+    .nav-center { display: none; }
+    .contact-body { grid-template-columns: 1fr; }
+    .contact-info { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 6%; }
+    .contact-form-wrap { padding: 48px 6%; }
+    .form-row { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
-  <a href="index.html" class="logo">Namal</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Writing</a></li>
+  <a href="index.html" class="logo-block">
+    <div class="logo-icon">N</div>
+    <span class="logo-name">Namal</span>
+  </a>
+  <ul class="nav-center">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#posts">Blog</a></li>
     <li><a href="index.html#about">About</a></li>
-    <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-btn active">Contact Me</a>
+  </div>
 </nav>
 
-<div class="contact-wrap">
-  <div class="contact-left">
-    <h1 class="contact-heading">Let's<br><em>connect.</em></h1>
+<div class="page">
+
+  <!-- ── HERO ── -->
+  <div class="contact-hero">
+    <p class="contact-hero-eyebrow">Contact</p>
+    <h1>Let's build something<br><em>worth building.</em></h1>
+    <p class="contact-hero-sub">Whether it's a remote ML role, a collaboration, or just a conversation about F1 strategy — I'm all in.</p>
   </div>
 
-  <div class="contact-right">
-    <p class="contact-label">Get in touch</p>
+  <!-- ── BODY ── -->
+  <div class="contact-body">
 
-    <a href="mailto:namalrizwan4@email.com" class="contact-link" style="transition-delay: 0.1s">
-      <span class="link-name">Email</span>
-      <span class="link-arrow">↗</span>
-    </a>
-    <a href="https://www.linkedin.com/in/namal-rizwan-39708a389/" class="contact-link" style="transition-delay: 0.2s">
-      <span class="link-name">LinkedIn</span>
-      <span class="link-arrow">↗</span>
-    </a>
-    <a href="https://github.com/namal-xx" class="contact-link" style="transition-delay: 0.3s">
-      <span class="link-name">GitHub</span>
-      <span class="link-arrow">↗</span>
-    </a>
-    <a href="https://medium.com/@namalrizwan4" class="contact-link" style="transition-delay: 0.4s">
-      <span class="link-name">Medium</span>
-      <span class="link-arrow">↗</span>
-    </a>
+    <!-- Left info -->
+    <div class="contact-info">
+      <p class="info-label">Get in touch</p>
+
+      <div class="contact-item">
+        <span class="contact-item-key">Email</span>
+        <a href="mailto:hello@namal.dev" class="contact-item-val">hello@namal.dev</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-key">LinkedIn</span>
+        <a href="https://linkedin.com/in/namal" target="_blank" class="contact-item-val">linkedin.com/in/namal</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-key">GitHub</span>
+        <a href="https://github.com/namal" target="_blank" class="contact-item-val">github.com/namal</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-key">Medium</span>
+        <a href="https://medium.com/@namal" target="_blank" class="contact-item-val">medium.com/@namal</a>
+      </div>
+
+      <div class="availability-block">
+        <div class="availability-top">
+          <span class="avail-dot"></span>
+          <span class="avail-status">Available for remote roles</span>
+        </div>
+        <p class="avail-detail">Open to full-time ML / Computer Vision roles with US or UK-based companies that hire globally.</p>
+      </div>
+
+      <div class="social-row">
+        <a href="https://linkedin.com/in/namal" class="social-btn" target="_blank">LinkedIn</a>
+        <a href="https://github.com/namal" class="social-btn" target="_blank">GitHub</a>
+        <a href="https://medium.com/@namal" class="social-btn" target="_blank">Medium</a>
+      </div>
+    </div>
+
+    <!-- Right form -->
+    <div class="contact-form-wrap">
+      <p class="form-label-top">Send a message</p>
+
+      <div id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Your first name" />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Your last name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="reason">Reason for reaching out</label>
+          <select id="reason">
+            <option value="" disabled selected>Select a topic</option>
+            <option>Job opportunity / Remote role</option>
+            <option>Collaboration or project</option>
+            <option>Blog / writing feedback</option>
+            <option>F1 debate 🏎</option>
+            <option>Just saying hello</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="What's on your mind?"></textarea>
+        </div>
+
+        <button class="submit-btn" onclick="handleSubmit()">Send Message →</button>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✓</div>
+        <p class="success-title">Message sent.</p>
+        <p class="success-sub">Thanks for reaching out. I'll get back to you as soon as I can — usually within a day or two.</p>
+      </div>
+    </div>
+
   </div>
-</div>
 
-<footer>
-  <p>© 2025 Namal</p>
-</footer>
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2025 Namal</p>
+    <p class="footer-right">ML Engineer · Open to remote roles</p>
+  </footer>
+
+</div><!-- end .page -->
 
 <script>
+  // Scroll animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.contact-left, .contact-right, .contact-link').forEach(el => observer.observe(el));
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll(
+    '.contact-hero-eyebrow, .contact-hero h1, .contact-hero-sub, .contact-info, .contact-form-wrap'
+  ).forEach(el => observer.observe(el));
+
+  // Form submit (frontend-only — hook up to your backend/formspree later)
+  function handleSubmit() {
+    const name  = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg   = document.getElementById('message').value.trim();
+
+    if (!name || !email || !msg) {
+      // Shake the empty fields visually
+      [document.getElementById('fname'), document.getElementById('email'), document.getElementById('message')]
+        .forEach(el => {
+          if (!el.value.trim()) {
+            el.style.borderColor = '#e05555';
+            setTimeout(() => el.style.borderColor = '', 1200);
+          }
+        });
+      return;
+    }
+
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  }
 </script>
 </body>
 </html>
