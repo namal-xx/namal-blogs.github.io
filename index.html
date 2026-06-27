@@ -286,44 +286,7 @@
   .post-card-title { font-family: 'DM Serif Display', serif; font-size: 18px; line-height: 1.35; flex: 1; }
   .post-card-meta { font-size: 11px; color: var(--muted); margin-top: 14px; }
 
-  /* ── ABOUT ── */
-  .about-section {
-    width: 100%; padding: 80px 8% 100px;
-    border-top: 1px solid var(--border);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-  }
-  .about-left { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
-  .about-left.visible { opacity: 1; transform: translateY(0); }
-  .about-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-  .about-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
-  .about-heading { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 28px; }
-  .about-heading em { font-style: italic; color: var(--accent); }
-  .about-body p { font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 16px; }
 
-  .about-right { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s; }
-  .about-right.visible { opacity: 1; transform: translateY(0); }
-
-  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-  .skill-tag {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 7px 15px; border: 1px solid var(--border); color: var(--muted);
-    border-radius: 4px; transition: border-color 0.18s, color 0.18s;
-  }
-  .skill-tag:hover { border-color: var(--accent-dim); color: var(--accent); }
-
-  /* Right side — visual card */
-  .about-card {
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 36px; border-radius: 2px;
-  }
-  .about-card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
-  .about-card-name { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 6px; }
-  .about-card-role { font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 28px; }
-  .about-card-divider { height: 1px; background: var(--border); margin-bottom: 24px; }
-  .about-card-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .about-card-key { font-size: 11px; color: var(--muted); font-weight: 400; }
-  .about-card-val { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
-  .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 6px; animation: pulse 2s infinite; }
 
   /* ── FOOTER ── */
   footer {
@@ -361,7 +324,7 @@
   <ul class="nav-center">
     <li><a href="#home" class="active">Home</a></li>
     <li><a href="#posts">Blog</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="about.html">About</a></li>
   </ul>
 
   <div class="nav-right">
@@ -453,55 +416,7 @@
   </div>
 </section>
 
-<!-- ── ABOUT ── -->
-<section class="about-section" id="about">
-  <div class="about-left">
-    <p class="about-eyebrow">About Me</p>
-    <h2 class="about-heading">Self-taught.<br><em>Always curious.</em></h2>
-    <div class="about-body">
-      <p>I'm a machine learning engineer who got here by building things, not collecting certificates. Computer vision, CNNs, real client projects — that's what taught me ML, not a classroom.</p>
-      <p>When I'm not training models or pushing PRs, I'm watching F1 and thinking about what race strategy and machine learning have more in common than people realise.</p>
-      <p>Currently looking for remote ML roles. If something I wrote resonated — let's talk.</p>
-    </div>
-    <div class="about-tags">
-      <span class="skill-tag">TensorFlow</span>
-      <span class="skill-tag">Computer Vision</span>
-      <span class="skill-tag">CNNs</span>
-      <span class="skill-tag">scikit-learn</span>
-      <span class="skill-tag">F1</span>
-      <span class="skill-tag">Open Source</span>
-    </div>
-  </div>
 
-  <div class="about-right">
-    <div class="about-card">
-      <p class="about-card-label">Profile</p>
-      <p class="about-card-name">Namal</p>
-      <p class="about-card-role">ML Engineer · Computer Vision</p>
-      <div class="about-card-divider"></div>
-      <div class="about-card-row">
-        <span class="about-card-key">Status</span>
-        <span class="about-card-val"><span class="status-dot"></span>Open to work</span>
-      </div>
-      <div class="about-card-row">
-        <span class="about-card-key">Availability</span>
-        <span class="about-card-val">Remote · US / UK</span>
-      </div>
-      <div class="about-card-row">
-        <span class="about-card-key">Speciality</span>
-        <span class="about-card-val">Computer Vision</span>
-      </div>
-      <div class="about-card-row">
-        <span class="about-card-key">Stack</span>
-        <span class="about-card-val">TensorFlow · Python</span>
-      </div>
-      <div class="about-card-row">
-        <span class="about-card-key">Off-duty</span>
-        <span class="about-card-val">Watching F1 🏎</span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ── FOOTER ── -->
 <footer>
