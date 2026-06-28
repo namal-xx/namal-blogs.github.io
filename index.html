@@ -6,7 +6,12 @@
 <title>Namal — ML Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+  /* CURSOR */
+  .cursor { position: fixed; z-index: 9999; pointer-events: none; width: 12px; height: 12px; border-radius: 50%; background: #2DD4BF; transform: translate(-50%,-50%); transition: width .2s, height .2s; mix-blend-mode: difference; }
+  .cursor-ring { position: fixed; z-index: 9998; pointer-events: none; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(45,212,191,0.5); transform: translate(-50%,-50%); transition: width .2s, height .2s, border-color .2s; }
+  .cursor.hover { width: 6px; height: 6px; }
+  .cursor-ring.hover { width: 52px; height: 52px; border-color: rgba(45,212,191,0.85); }
   :root {
     --bg: #0C0F0F;
     --surface: #131818;
@@ -314,6 +319,10 @@
 </head>
 <body>
 
+<!-- ── CURSOR ── -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="logo-block">
@@ -325,11 +334,10 @@
     <li><a href="#home" class="active">Home</a></li>
     <li><a href="#posts">Blog</a></li>
     <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
 
-  <div class="nav-right">
-    <a href="contact.html" class="nav-btn">Contact Me</a>
-  </div>
+  <div style="width:120px"></div><!-- spacer to keep logo balanced -->
 </nav>
 
 <!-- ── HERO ── -->
@@ -449,6 +457,17 @@
     navLinks.forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
+  });
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function animateRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animateRing); })();
+  document.querySelectorAll('a,.post-card,.featured-card').forEach(el => {
+    el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
   });
 </script>
 </body>
