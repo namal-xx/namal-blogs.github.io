@@ -95,5 +95,23 @@ model.fit(X_train, y_train, epochs=10)</code></pre>
   <p>© 2025 Namal</p>
 </footer>
 
+ <script>
+  // Animations
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), { threshold: 0.08 });
+  document.querySelectorAll('.contact-eyebrow,.contact-heading,.contact-left-sub,.contact-right').forEach(el => obs.observe(el));
+
+  // Custom cursor
+  const arrow = document.getElementById('cursorArrow');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; arrow.style.left=mx+'px'; arrow.style.top=my+'px'; });
+  (function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('a,.contact-link').forEach(el => {
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+  });
+</script>
+
+
 </body>
 </html>
