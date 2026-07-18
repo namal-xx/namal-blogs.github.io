@@ -1,38 +1,195 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Namal — Contact</title>
+<title>POST TITLE HERE — Namal</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
   :root {
-    --bg: #0C0F0F; --surface: #131818;
+    --bg: #0C0F0F; --surface: #131818; --surface2: #182020;
     --text: #E2EAE8; --muted: #5C706C; --border: #1E2929;
     --accent: #2DD4BF; --accent-dim: #1A7A6E; --accent-glow: rgba(45,212,191,0.10);
   }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
-
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   ::selection { background: var(--accent); color: #0C0F0F; }
-  /* CURSOR */
+
+  /* ── CURSOR ── */
   .cursor-arrow { position: fixed; z-index: 9999; pointer-events: none; transform-origin: 0 0; }
   .cursor-arrow svg { width: 20px; height: 20px; filter: drop-shadow(0 0 4px rgba(45,212,191,0.5)); }
-  
+  .cursor-ring { position: fixed; z-index: 9998; pointer-events: none; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(45,212,191,0.45); transform: translate(-50%,-50%); transition: width .22s, height .22s, border-color .22s; }
+  .cursor-ring.hover { width: 54px; height: 54px; border-color: rgba(45,212,191,0.85); }
 
-  /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(12,15,15,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(12,15,15,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
   .logo-block { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--text); }
-  .logo-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--accent-dim), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: #0C0F0F; }
+  .logo-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--accent-dim), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: #0C0F0F; flex-shrink: 0; }
   .logo-name { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
   .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; list-style: none; align-items: center; }
   .nav-center li a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; padding: 6px 14px; position: relative; transition: color 0.18s; }
   .nav-center li a::after { content: ''; position: absolute; bottom: -2px; left: 14px; right: 14px; height: 2px; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: center; transition: transform 0.22s cubic-bezier(0.16,1,0.3,1); }
   .nav-center li a:hover { color: var(--text); }
-  .nav-center li a.active { color: var(--text); }
   .nav-center li a.active::after { transform: scaleX(1); }
+  .nav-center li a.active { color: var(--text); }
+  .nav-spacer { width: 100px; }
+
+  /* ── POST LAYOUT ── */
+  .post-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 120px 24px 100px;
+  }
+
+  /* ── HEADER ── */
+  .post-header { margin-bottom: 48px; }
+
+  .post-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent-dim);
+    padding: 5px 12px; border-radius: 4px; background: var(--accent-glow);
+    margin-bottom: 24px;
+  }
+
+  .post-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 400; line-height: 1.12; letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .post-meta {
+    font-size: 13px; color: var(--muted); font-weight: 400;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); display: inline-block; }
+
+  /* ── COVER IMAGE ── */
+  .post-cover {
+    width: 100%; aspect-ratio: 16/9;
+    object-fit: cover; display: block;
+    margin-bottom: 56px;
+    filter: brightness(0.85);
+  }
+
+  /* ── POST BODY ── */
+  .post-body { font-size: 17px; line-height: 1.85; font-weight: 300; color: var(--text); }
+
+  /* Paragraphs */
+  .post-body p { margin-bottom: 28px; }
+
+  /* Headings inside post */
+  .post-body h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 400; line-height: 1.2; letter-spacing: -0.01em;
+    color: var(--text);
+    margin-top: 56px; margin-bottom: 20px;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .post-body h3 {
+    font-size: 17px; font-weight: 600; letter-spacing: 0.01em;
+    color: var(--text);
+    margin-top: 36px; margin-bottom: 14px;
+  }
+
+  /* Blockquote */
+  .post-body blockquote {
+    border-left: 2px solid var(--accent);
+    padding: 4px 0 4px 24px;
+    margin: 36px 0;
+    color: var(--muted);
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(18px, 2.5vw, 22px);
+    font-style: italic; line-height: 1.5;
+  }
+
+  /* Code inline */
+  .post-body code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    background: var(--surface); color: var(--accent);
+    padding: 2px 7px; border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  /* Code block */
+  .post-body pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent-dim);
+    padding: 24px 28px;
+    border-radius: 2px;
+    overflow-x: auto;
+    margin: 32px 0;
+  }
+  .post-body pre code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px; line-height: 1.7;
+    background: none; color: var(--text);
+    padding: 0; border: none; border-radius: 0;
+  }
+
+  /* Links */
+  .post-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: border-color 0.18s; }
+  .post-body a:hover { border-color: var(--accent); }
+
+  /* Horizontal rule */
+  .post-body hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+  /* Unordered list */
+  .post-body ul { padding-left: 20px; margin-bottom: 28px; }
+  .post-body ul li { margin-bottom: 10px; padding-left: 6px; }
+  .post-body ul li::marker { color: var(--accent); }
+
+  /* Ordered list */
+  .post-body ol { padding-left: 20px; margin-bottom: 28px; }
+  .post-body ol li { margin-bottom: 10px; padding-left: 6px; }
+  .post-body ol li::marker { color: var(--accent); font-weight: 600; }
+
+  /* Image inside post */
+  .post-body img { width: 100%; display: block; margin: 36px 0; filter: brightness(0.88); }
+  .post-body .caption { font-size: 12px; color: var(--muted); text-align: center; margin-top: -24px; margin-bottom: 36px; }
+
+  /* ── BACK LINK ── */
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    margin-bottom: 48px;
+    transition: color 0.18s, gap 0.2s;
+  }
+  .back-link:hover { color: var(--accent); gap: 12px; }
+  .back-link svg { width: 14px; height: 14px; stroke: currentColor; }
+
+  /* ── POST FOOTER ── */
+  .post-footer {
+    margin-top: 72px; padding-top: 36px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .post-footer-left { font-size: 13px; color: var(--muted); }
+  .post-footer-left strong { color: var(--text); font-weight: 600; }
+  .back-to-blog {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .back-to-blog:hover { gap: 14px; }
+
+  /* ── SITE FOOTER ── */
+  footer { width: 100%; padding: 24px 8% 40px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  footer p { font-size: 12px; color: var(--muted); }
+  .footer-right { font-size: 11px; color: var(--accent-dim); letter-spacing: 0.06em; }
+
+  @media (max-width: 700px) {
+    .nav-center { display: none; }
+    .post-wrap { padding: 100px 20px 80px; }
+  }
 </style>
 </head>
 <body>
@@ -44,67 +201,108 @@
 </div>
 <div class="cursor-ring" id="cursorRing"></div>
 
+<!-- ── NAV ── -->
 <nav>
-  <a href="index.html" class="logo-block">
+  <a href="../index.html" class="logo-block">
     <div class="logo-icon">N</div>
     <span class="logo-name">Namal</span>
   </a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html#posts" class="active">Blog</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-spacer"></div>
 </nav>
 
-<article class="post">
+<!-- ══════════════════════════════════════════
+     POST CONTENT — edit everything below
+     ══════════════════════════════════════════ -->
+<div class="post-wrap">
 
+  <!-- Back link -->
+  <a href="../index.html#posts" class="back-link">
+    <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 7H4M4 7L7 4M4 7L7 10"/>
+    </svg>
+    All posts
+  </a>
+
+  <!-- ── HEADER ── -->
   <header class="post-header">
-    <p class="post-tag">Machine Learning</p>
-    <h1 class="post-title">Your post title goes here</h1>
-    <p class="post-meta">Jun 18, 2025 · 5 min read</p>
+    <p class="post-tag">Machine Learning</p>  <!-- CHANGE: tag/category -->
+    <h1 class="post-title">Your post title goes here</h1>  <!-- CHANGE: title -->
+    <p class="post-meta">
+      Jun 18, 2025                          <!-- CHANGE: date -->
+      <span class="post-meta-dot"></span>
+      5 min read                            <!-- CHANGE: read time -->
+    </p>
   </header>
 
+  <!-- ── COVER IMAGE ── -->
   <img src="images/my-first-post.jpg" class="post-cover" alt="Cover image" />
+  <!-- CHANGE: src to your image path -->
 
+  <!-- ── BODY ── -->
   <div class="post-body">
 
-    <p>Write your introduction here. This is the opening paragraph of your post.</p>
+    <p>Write your introduction here. Hook the reader in the first two sentences.</p>
 
     <h2>Your first section heading</h2>
 
-    <p>Continue writing here. Each paragraph goes inside its own &lt;p&gt; tag.</p>
+    <p>Continue writing here. Each paragraph gets its own <code>&lt;p&gt;</code> tag.</p>
 
-    <blockquote>Use this for a key quote or important insight you want to highlight.</blockquote>
+    <blockquote>Use this for a key quote or important insight you want to call out.</blockquote>
 
     <h2>Another section</h2>
 
-    <p>Keep writing. Add as many sections as you need.</p>
+    <p>Keep writing. Add as many <code>h2</code> headings and <code>p</code> paragraphs as you need.</p>
 
-    <pre><code>// Use this block for code examples
-model.fit(X_train, y_train, epochs=10)</code></pre>
+    <!-- Code block example -->
+    <pre><code>model.fit(X_train, y_train, epochs=10, validation_split=0.2)</code></pre>
 
-    <p>Closing thoughts go here.</p>
+    <!-- List example -->
+    <ul>
+      <li>First point</li>
+      <li>Second point</li>
+      <li>Third point</li>
+    </ul>
+
+    <hr />
+
+    <p>Closing thoughts go here. End with something worth remembering.</p>
 
   </div>
+  <!-- ── END BODY ── -->
 
-</article>
+  <!-- ── POST FOOTER ── -->
+  <div class="post-footer">
+    <p class="post-footer-left">Written by <strong>Namal</strong> · ML Engineer</p>
+    <a href="../index.html#posts" class="back-to-blog">← Back to Blog</a>
+  </div>
 
+</div>
+<!-- ══════════════════════════════════════════
+     END POST CONTENT
+     ══════════════════════════════════════════ -->
+
+<!-- ── SITE FOOTER ── -->
 <footer>
   <p>© 2025 Namal</p>
+  <p class="footer-right">ML Engineer · Open to remote roles</p>
 </footer>
 
- <script>
-  // Animations
-  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), { threshold: 0.08 });
-  document.querySelectorAll('.contact-eyebrow,.contact-heading,.contact-left-sub,.contact-right').forEach(el => obs.observe(el));
-
-  // Custom cursor
+<script>
   const arrow = document.getElementById('cursorArrow');
-  const ring   = document.getElementById('cursorRing');
+  const ring  = document.getElementById('cursorRing');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; arrow.style.left=mx+'px'; arrow.style.top=my+'px'; });
   (function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-  document.querySelectorAll('a,.contact-link').forEach(el => {
+  document.querySelectorAll('a').forEach(el => {
     el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
     el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
   });
 </script>
-
-
 </body>
 </html>
