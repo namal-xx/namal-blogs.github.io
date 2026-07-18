@@ -1,307 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POST TITLE HERE — Namal</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
-  :root {
-    --bg: #0C0F0F; --surface: #131818; --surface2: #182020;
-    --text: #E2EAE8; --muted: #5C706C; --border: #1E2929;
-    --accent: #2DD4BF; --accent-dim: #1A7A6E; --accent-glow: rgba(45,212,191,0.10);
-  }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-  ::selection { background: var(--accent); color: #0C0F0F; }
+{
+  "title": "What F1 Pit Stop Strategy Taught Me About ML Model Selection",
+  "tag": "Machine Learning",
+  "date": "Jun 18, 2025",
+  "readTime": "5 min read",
+  "cover": "images/my-first-post.jpg",
 
-  /* ── CURSOR ── */
-  .cursor-arrow { position: fixed; z-index: 9999; pointer-events: none; transform-origin: 0 0; }
-  .cursor-arrow svg { width: 20px; height: 20px; filter: drop-shadow(0 0 4px rgba(45,212,191,0.5)); }
-  .cursor-ring.hover { width: 54px; height: 54px; border-color: rgba(45,212,191,0.85); }
+  "body": [
 
-  /* ── NAV ── */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(12,15,15,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
-  .logo-block { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--text); }
-  .logo-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--accent-dim), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: #0C0F0F; flex-shrink: 0; }
-  .logo-name { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
-  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; list-style: none; align-items: center; }
-  .nav-center li a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; padding: 6px 14px; position: relative; transition: color 0.18s; }
-  .nav-center li a::after { content: ''; position: absolute; bottom: -2px; left: 14px; right: 14px; height: 2px; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: center; transition: transform 0.22s cubic-bezier(0.16,1,0.3,1); }
-  .nav-center li a:hover { color: var(--text); }
-  .nav-center li a.active::after { transform: scaleX(1); }
-  .nav-center li a.active { color: var(--text); }
-  .nav-spacer { width: 100px; }
+    { "type": "p", "text": "Every race weekend, engineers at Mercedes or Red Bull face the same core problem as any ML practitioner: too many variables, not enough certainty, and a decision that needs to be made <em>right now</em>." },
 
-  /* ── POST LAYOUT ── */
-  .post-wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 120px 24px 100px;
-  }
+    { "type": "h2", "text": "The Undercut Problem" },
 
-  /* ── HEADER ── */
-  .post-header { margin-bottom: 48px; }
+    { "type": "p", "text": "In F1, the undercut is when you pit your driver one lap earlier than your rival — banking on fresh tyres and clear air to build enough gap before they pit. It works brilliantly. Until it doesn't." },
 
-  .post-tag {
-    display: inline-block;
-    font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid var(--accent-dim);
-    padding: 5px 12px; border-radius: 4px; background: var(--accent-glow);
-    margin-bottom: 24px;
-  }
+    { "type": "quote", "text": "You don't pick the perfect model. You pick the best one given the data you have and the time you have left." },
 
-  .post-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(32px, 5vw, 54px);
-    font-weight: 400; line-height: 1.12; letter-spacing: -0.02em;
-    margin-bottom: 20px;
-  }
+    { "type": "h2", "text": "How This Mirrors Feature Selection" },
 
-  .post-meta {
-    font-size: 13px; color: var(--muted); font-weight: 400;
-    display: flex; align-items: center; gap: 16px;
-  }
-  .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); display: inline-block; }
+    { "type": "p", "text": "When I was building the phishing detector, I had 47 features extracted from URLs. I didn't use all of them. Like a strategist who ignores tyre temperature data on a cold track, I dropped features that added noise rather than signal." },
 
-  /* ── COVER IMAGE ── */
-  .post-cover {
-    width: 100%; aspect-ratio: 16/9;
-    object-fit: cover; display: block;
-    margin-bottom: 56px;
-    filter: brightness(0.85);
-  }
+    { "type": "ul", "items": [
+      "URL length — high signal",
+      "Number of subdomains — high signal",
+      "Presence of HTTPS — surprisingly low signal in modern phishing",
+      "Lexical entropy — high signal"
+    ]},
 
-  /* ── POST BODY ── */
-  .post-body { font-size: 17px; line-height: 1.85; font-weight: 300; color: var(--text); }
+    { "type": "h2", "text": "The Code That Made the Call" },
 
-  /* Paragraphs */
-  .post-body p { margin-bottom: 28px; }
+    { "type": "code", "text": "from sklearn.feature_selection import SelectKBest, f_classif\n\nselector = SelectKBest(score_func=f_classif, k=12)\nX_selected = selector.fit_transform(X_train, y_train)\n\n# Like a pit wall engineer — keep only what moves the needle" },
 
-  /* Headings inside post */
-  .post-body h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(22px, 3vw, 30px);
-    font-weight: 400; line-height: 1.2; letter-spacing: -0.01em;
-    color: var(--text);
-    margin-top: 56px; margin-bottom: 20px;
-    padding-top: 24px; border-top: 1px solid var(--border);
-  }
-  .post-body h3 {
-    font-size: 17px; font-weight: 600; letter-spacing: 0.01em;
-    color: var(--text);
-    margin-top: 36px; margin-bottom: 14px;
-  }
+    { "type": "p", "text": "SelectKBest is my pit wall. It scores each feature and keeps only the top k. Brutal. Efficient. Exactly right." },
 
-  /* Blockquote */
-  .post-body blockquote {
-    border-left: 2px solid var(--accent);
-    padding: 4px 0 4px 24px;
-    margin: 36px 0;
-    color: var(--muted);
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(18px, 2.5vw, 22px);
-    font-style: italic; line-height: 1.5;
-  }
+    { "type": "hr" },
 
-  /* Code inline */
-  .post-body code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 13px;
-    background: var(--surface); color: var(--accent);
-    padding: 2px 7px; border-radius: 4px;
-    border: 1px solid var(--border);
-  }
+    { "type": "p", "text": "The best strategists and the best ML engineers share one trait: they commit to a decision under uncertainty and adjust fast when the data changes. That's the whole game." }
 
-  /* Code block */
-  .post-body pre {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 2px solid var(--accent-dim);
-    padding: 24px 28px;
-    border-radius: 2px;
-    overflow-x: auto;
-    margin: 32px 0;
-  }
-  .post-body pre code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 13px; line-height: 1.7;
-    background: none; color: var(--text);
-    padding: 0; border: none; border-radius: 0;
-  }
-
-  /* Links */
-  .post-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: border-color 0.18s; }
-  .post-body a:hover { border-color: var(--accent); }
-
-  /* Horizontal rule */
-  .post-body hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
-
-  /* Unordered list */
-  .post-body ul { padding-left: 20px; margin-bottom: 28px; }
-  .post-body ul li { margin-bottom: 10px; padding-left: 6px; }
-  .post-body ul li::marker { color: var(--accent); }
-
-  /* Ordered list */
-  .post-body ol { padding-left: 20px; margin-bottom: 28px; }
-  .post-body ol li { margin-bottom: 10px; padding-left: 6px; }
-  .post-body ol li::marker { color: var(--accent); font-weight: 600; }
-
-  /* Image inside post */
-  .post-body img { width: 100%; display: block; margin: 36px 0; filter: brightness(0.88); }
-  .post-body .caption { font-size: 12px; color: var(--muted); text-align: center; margin-top: -24px; margin-bottom: 36px; }
-
-  /* ── BACK LINK ── */
-  .back-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none;
-    margin-bottom: 48px;
-    transition: color 0.18s, gap 0.2s;
-  }
-  .back-link:hover { color: var(--accent); gap: 12px; }
-  .back-link svg { width: 14px; height: 14px; stroke: currentColor; }
-
-  /* ── POST FOOTER ── */
-  .post-footer {
-    margin-top: 72px; padding-top: 36px;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
-  }
-  .post-footer-left { font-size: 13px; color: var(--muted); }
-  .post-footer-left strong { color: var(--text); font-weight: 600; }
-  .back-to-blog {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--accent); text-decoration: none;
-    transition: gap 0.2s;
-  }
-  .back-to-blog:hover { gap: 14px; }
-
-  /* ── SITE FOOTER ── */
-  footer { width: 100%; padding: 24px 8% 40px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  footer p { font-size: 12px; color: var(--muted); }
-  .footer-right { font-size: 11px; color: var(--accent-dim); letter-spacing: 0.06em; }
-
-  @media (max-width: 700px) {
-    .nav-center { display: none; }
-    .post-wrap { padding: 100px 20px 80px; }
-  }
-</style>
-</head>
-<body>
-
-<div class="cursor-arrow" id="cursorArrow">
-  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 2L9 18L12 12L18 9L2 2Z" fill="#2DD4BF" stroke="#0C0F0F" stroke-width="0.5"/>
-  </svg>
-</div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- ── NAV ── -->
-<nav>
-  <a href="../index.html" class="logo-block">
-    <div class="logo-icon">N</div>
-    <span class="logo-name">Namal</span>
-  </a>
-  <ul class="nav-center">
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="../index.html#posts" class="active">Blog</a></li>
-    <li><a href="../about.html">About</a></li>
-    <li><a href="../contact.html">Contact</a></li>
-  </ul>
-  <div class="nav-spacer"></div>
-</nav>
-
-<!-- ══════════════════════════════════════════
-     POST CONTENT — edit everything below
-     ══════════════════════════════════════════ -->
-<div class="post-wrap">
-
-  <!-- Back link -->
-  <a href="../index.html#posts" class="back-link">
-    <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 7H4M4 7L7 4M4 7L7 10"/>
-    </svg>
-    All posts
-  </a>
-
-  <!-- ── HEADER ── -->
-  <header class="post-header">
-    <p class="post-tag">Machine Learning</p>  <!-- CHANGE: tag/category -->
-    <h1 class="post-title">Your post title goes here</h1>  <!-- CHANGE: title -->
-    <p class="post-meta">
-      Jun 18, 2025                          <!-- CHANGE: date -->
-      <span class="post-meta-dot"></span>
-      5 min read                            <!-- CHANGE: read time -->
-    </p>
-  </header>
-
-  <!-- ── COVER IMAGE ── -->
-  <img src="images/my-first-post.jpg" class="post-cover" alt="Cover image" />
-  <!-- CHANGE: src to your image path -->
-
-  <!-- ── BODY ── -->
-  <div class="post-body">
-
-    <p>Write your introduction here. Hook the reader in the first two sentences.</p>
-
-    <h2>Your first section heading</h2>
-
-    <p>Continue writing here. Each paragraph gets its own <code>&lt;p&gt;</code> tag.</p>
-
-    <blockquote>Use this for a key quote or important insight you want to call out.</blockquote>
-
-    <h2>Another section</h2>
-
-    <p>Keep writing. Add as many <code>h2</code> headings and <code>p</code> paragraphs as you need.</p>
-
-    <!-- Code block example -->
-    <pre><code>model.fit(X_train, y_train, epochs=10, validation_split=0.2)</code></pre>
-
-    <!-- List example -->
-    <ul>
-      <li>First point</li>
-      <li>Second point</li>
-      <li>Third point</li>
-    </ul>
-
-    <hr />
-
-    <p>Closing thoughts go here. End with something worth remembering.</p>
-
-  </div>
-  <!-- ── END BODY ── -->
-
-  <!-- ── POST FOOTER ── -->
-  <div class="post-footer">
-    <p class="post-footer-left">Written by <strong>Namal</strong> · ML Engineer</p>
-    <a href="../index.html#posts" class="back-to-blog">← Back to Blog</a>
-  </div>
-
-</div>
-<!-- ══════════════════════════════════════════
-     END POST CONTENT
-     ══════════════════════════════════════════ -->
-
-<!-- ── SITE FOOTER ── -->
-<footer>
-  <p>© 2025 Namal</p>
-  <p class="footer-right">ML Engineer · Open to remote roles</p>
-</footer>
-
-<script>
-  const arrow = document.getElementById('cursorArrow');
-  const ring  = document.getElementById('cursorRing');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; arrow.style.left=mx+'px'; arrow.style.top=my+'px'; });
-  (function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-  document.querySelectorAll('a').forEach(el => {
-    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
-    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
-  });
-</script>
-</body>
-</html>
+  ]
+}
