@@ -44,16 +44,15 @@
 
     { "type": "p", "text": "That's what this blog is about."},
 
-
-    { "type": "p", "text": "You'll find machine learning, deep learning, programming, things I build, mistakes I make, lessons I wish I had learned earlier, and occasionally thoughts that have nothing to do with code but everything to do with becoming a better engineer."},
-
-    { "type": "p", "text": "Outside of code, you'll probably find me watching Formula 1 on a Sunday, wondering how a pit stop can be completed in under two seconds, or staying up far too late for an NBA game. I've always been drawn to environments where tiny decisions make enormous differences. Looking back, it's not surprising that machine learning ended up becoming the field I wanted to spend my time in."},
+    { "type": "p", "text": "You'll find machine learning, software engineering, programming, things I build, mistakes I make, lessons I wish I had learned earlier, and occasionally thoughts that have nothing to do with code but everything to do with becoming a better engineer."},
 
     { "type": "p", "text": "I don't want this to become another collection of tutorials that simply repeat the documentation."},
 
     { "type": "p", "text": "If I write about something, I want it to answer the question I wish someone had answered when I was learning it."},
 
-    {"type": "p", "text": "Beyond machine learning, you'll occasionally find me writing about Formula 1, books, technology, and the ideas that shape how I approach both engineering and life."},
+    { "type": "p", "text": "Outside of code, you'll probably find me watching Formula 1 on a Sunday, wondering how a pit stop can be completed in under two seconds, or staying up far too late for an NBA game. I've always been drawn to environments where tiny decisions make enormous differences. Looking back, it's not surprising that machine learning ended up becoming the field I wanted to spend my time in."},
+
+    {"type": "p", "text": "Not every post here will be about machine learning. Every now and then, I'll wander into Formula 1, books, software engineering, or any idea that's interesting enough to make me stop and think."},
     
     { "type": "p", "text": "Some posts will be technical."},
 
