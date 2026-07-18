@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading... — Namal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+  :root {
+    --bg: #0C0F0F; --surface: #131818; --surface2: #182020;
+    --text: #E2EAE8; --muted: #5C706C; --border: #1E2929;
+    --accent: #2DD4BF; --accent-dim: #1A7A6E; --accent-glow: rgba(45,212,191,0.10);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--accent); color: #0C0F0F; }
+
+  /* CURSOR */
+  .cursor-arrow { position: fixed; z-index: 9999; pointer-events: none; transform-origin: 0 0; }
+  .cursor-arrow svg { width: 20px; height: 20px; filter: drop-shadow(0 0 4px rgba(45,212,191,0.5)); }
+  .cursor-ring { position: fixed; z-index: 9998; pointer-events: none; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(45,212,191,0.45); transform: translate(-50%,-50%); transition: width .22s, height .22s, border-color .22s; }
+  .cursor-ring.hover { width: 54px; height: 54px; border-color: rgba(45,212,191,0.85); }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(12,15,15,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+  .logo-block { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--text); }
+  .logo-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--accent-dim), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: #0C0F0F; flex-shrink: 0; }
+  .logo-name { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; list-style: none; }
+  .nav-center li a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; padding: 6px 14px; position: relative; transition: color 0.18s; }
+  .nav-center li a::after { content: ''; position: absolute; bottom: -2px; left: 14px; right: 14px; height: 2px; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: center; transition: transform 0.22s cubic-bezier(0.16,1,0.3,1); }
+  .nav-center li a:hover { color: var(--text); }
+  .nav-center li a.active { color: var(--text); }
+  .nav-center li a.active::after { transform: scaleX(1); }
+  .nav-spacer { width: 100px; }
+
+  /* LOADING STATE */
+  .loading { display: flex; align-items: center; justify-content: center; min-height: 100vh; flex-direction: column; gap: 16px; }
+  .loading-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.2;transform:scale(0.8)} 50%{opacity:1;transform:scale(1)} }
+
+  /* POST LAYOUT */
+  .post-wrap { max-width: 720px; margin: 0 auto; padding: 120px 24px 100px; }
+
+  /* BACK LINK */
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 48px; transition: color 0.18s, gap 0.2s; }
+  .back-link:hover { color: var(--accent); gap: 12px; }
+  .back-link svg { width: 14px; height: 14px; stroke: currentColor; }
+
+  /* HEADER */
+  .post-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent-dim); padding: 5px 12px; border-radius: 4px; background: var(--accent-glow); margin-bottom: 24px; }
+  .post-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 5vw, 54px); font-weight: 400; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .post-meta { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+  .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); display: inline-block; }
+
+  /* COVER */
+  .post-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; margin-bottom: 56px; filter: brightness(0.85); }
+
+  /* BODY TYPOGRAPHY */
+  .post-body { font-size: 17px; line-height: 1.85; font-weight: 300; color: var(--text); }
+  .post-body p { margin-bottom: 28px; }
+  .post-body h2 { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 3vw, 30px); font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; margin-top: 56px; margin-bottom: 20px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .post-body h3 { font-size: 17px; font-weight: 600; margin-top: 36px; margin-bottom: 14px; }
+  .post-body blockquote { border-left: 2px solid var(--accent); padding: 4px 0 4px 24px; margin: 36px 0; color: var(--muted); font-family: 'DM Serif Display', serif; font-size: clamp(18px, 2.5vw, 22px); font-style: italic; line-height: 1.5; }
+  .post-body code { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; background: var(--surface); color: var(--accent); padding: 2px 7px; border-radius: 4px; border: 1px solid var(--border); }
+  .post-body pre { background: var(--surface); border: 1px solid var(--border); border-left: 2px solid var(--accent-dim); padding: 24px 28px; border-radius: 2px; overflow-x: auto; margin: 32px 0; }
+  .post-body pre code { background: none; color: var(--text); padding: 0; border: none; font-size: 13px; line-height: 1.7; }
+  .post-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: border-color 0.18s; }
+  .post-body a:hover { border-color: var(--accent); }
+  .post-body hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+  .post-body ul, .post-body ol { padding-left: 20px; margin-bottom: 28px; }
+  .post-body li { margin-bottom: 10px; padding-left: 6px; }
+  .post-body ul li::marker { color: var(--accent); }
+  .post-body ol li::marker { color: var(--accent); font-weight: 600; }
+  .post-body img { width: 100%; display: block; margin: 36px 0; filter: brightness(0.88); }
+  .post-body .caption { font-size: 12px; color: var(--muted); text-align: center; margin-top: -24px; margin-bottom: 36px; }
+
+  /* POST FOOTER */
+  .post-footer { margin-top: 72px; padding-top: 36px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .post-footer-left { font-size: 13px; color: var(--muted); }
+  .post-footer-left strong { color: var(--text); font-weight: 600; }
+  .back-to-blog { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: gap 0.2s; }
+  .back-to-blog:hover { gap: 14px; }
+
+  /* SITE FOOTER */
+  footer { width: 100%; padding: 24px 8% 40px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  footer p { font-size: 12px; color: var(--muted); }
+  .footer-right { font-size: 11px; color: var(--accent-dim); letter-spacing: 0.06em; }
+
+  @media (max-width: 700px) { .nav-center { display: none; } .post-wrap { padding: 100px 20px 80px; } }
+</style>
+</head>
+<body>
+
+<div class="cursor-arrow" id="cursorArrow">
+  <svg viewBox="0 0 20 20" fill="none"><path d="M2 2L9 18L12 12L18 9L2 2Z" fill="#2DD4BF" stroke="#0C0F0F" stroke-width="0.5"/></svg>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="../index.html" class="logo-block">
+    <div class="logo-icon">N</div>
+    <span class="logo-name">Namal</span>
+  </a>
+  <ul class="nav-center">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html#posts" class="active">Blog</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-spacer"></div>
+</nav>
+
+<!-- Content injected here by JS -->
+<div id="app">
+  <div class="loading"><div class="loading-dot"></div></div>
+</div>
+
+<footer>
+  <p>© 2025 Namal</p>
+  <p class="footer-right">ML Engineer · Open to remote roles</p>
+</footer>
+
+<script>
+// ── RENDER ENGINE ──────────────────────────────────────────────
+// Converts JSON content blocks into styled HTML
+function renderBlocks(blocks) {
+  return blocks.map(block => {
+    switch (block.type) {
+
+      case 'p':
+        return `<p>${block.text}</p>`;
+
+      case 'h2':
+        return `<h2>${block.text}</h2>`;
+
+      case 'h3':
+        return `<h3>${block.text}</h3>`;
+
+      case 'quote':
+        return `<blockquote>${block.text}</blockquote>`;
+
+      case 'code':
+        return `<pre><code>${escHtml(block.text)}</code></pre>`;
+
+      case 'hr':
+        return `<hr />`;
+
+      case 'ul':
+        return `<ul>${block.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+
+      case 'ol':
+        return `<ol>${block.items.map(i => `<li>${i}</li>`).join('')}</ol>`;
+
+      case 'image':
+        return `<img src="${block.src}" alt="${block.alt || ''}" />
+                ${block.caption ? `<p class="caption">${block.caption}</p>` : ''}`;
+
+      default:
+        return '';
+    }
+  }).join('\n');
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── LOAD POST ─────────────────────────────────────────────────
+async function loadPost() {
+  // Read ?post=slug from URL e.g. post.html?post=f1-and-ml
+  const params = new URLSearchParams(window.location.search);
+  const slug   = params.get('post');
+
+  if (!slug) { showError('No post specified.'); return; }
+
+  try {
+    const res  = await fetch(`data/${slug}.json`);
+    if (!res.ok) throw new Error('Not found');
+    const post = await res.json();
+
+    // Update page title
+    document.title = `${post.title} — Namal`;
+
+    // Render
+    document.getElementById('app').innerHTML = `
+      <div class="post-wrap">
+        <a href="../index.html#posts" class="back-link">
+          <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 7H4M4 7L7 4M4 7L7 10"/>
+          </svg>
+          All posts
+        </a>
+
+        <header>
+          <p class="post-tag">${post.tag}</p>
+          <h1 class="post-title">${post.title}</h1>
+          <p class="post-meta">
+            ${post.date}
+            <span class="post-meta-dot"></span>
+            ${post.readTime}
+          </p>
+        </header>
+
+        ${post.cover ? `<img src="${post.cover}" class="post-cover" alt="Cover" />` : ''}
+
+        <div class="post-body">
+          ${renderBlocks(post.body)}
+        </div>
+
+        <div class="post-footer">
+          <p class="post-footer-left">Written by <strong>Namal</strong> · ML Engineer</p>
+          <a href="../index.html#posts" class="back-to-blog">← Back to Blog</a>
+        </div>
+      </div>
+    `;
+
+    // Re-attach cursor hover on new links
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+
+  } catch(e) {
+    showError('Post not found.');
+  }
+}
+
+function showError(msg) {
+  document.getElementById('app').innerHTML = `
+    <div class="post-wrap" style="padding-top:160px;text-align:center">
+      <p style="color:var(--muted);font-size:14px">${msg}</p>
+      <a href="../index.html#posts" class="back-link" style="margin-top:24px;display:inline-flex">← Back to Blog</a>
+    </div>`;
+}
+
+// ── CURSOR ────────────────────────────────────────────────────
+const arrow = document.getElementById('cursorArrow');
+const ring  = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; arrow.style.left=mx+'px'; arrow.style.top=my+'px'; });
+(function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+loadPost();
+</script>
+</body>
+</html>
