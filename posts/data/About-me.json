@@ -10,7 +10,63 @@
 
     { "type": "p", "text": "A few years ago, if you had asked me what I wanted to do with my life, I probably wouldn't have had a good answer."},
 
-    { "type": "p", "text": "Machine learning wasn't part of some grand plan. There wasn't a moment where everything suddenly clicked. There wasn't a movie-like realization that this is my calling." }
+    { "type": "p", "text": "Machine learning wasn't part of some grand plan. There wasn't a moment where everything suddenly clicked. There wasn't a movie-like realization that this is my calling." },
+
+    { "type": "p", "text": "It started with curiosity."},
+
+    { "type": "p", "text": "One question became ten. Ten became a hundred. Every answer opened the door to another problem that seemed even more interesting than the last. Somewhere along the way, I stopped learning because I had to and started learning because I genuinely wanted to know what was happening underneath the surface."},
+
+    { "type": "p", "text": "That curiosity eventually led me into machine learning."},
+
+    { "type": "p", "text": "Like most beginners, I thought building a model was the hard part."},
+
+    { "type": "p", "text": "It isn't."},
+
+    { "type": "p", "text": "The hard part is understanding why the model behaves the way it does. Why does one feature matter more than another? Why does accuracy suddenly collapse after deployment? Why does a model that looks perfect during training fail on real-world data?"},
+
+    { "type": "p", "text": "Those questions fascinated me far more than simply getting a high score on a benchmark."},
+
+    { "type": "p", "text": "Since then, I've spent countless hours building projects, breaking them, rebuilding them, reading documentation that made no sense the first time, debugging errors that somehow disappeared after restarting my computer, and realizing that every experienced engineer has been confused before.  "},
+
+    { "type": "p", "text": "Progress rarely looked dramatic."},
+
+    { "type": "p", "text": "Most days it looked like staring at a terminal for an hour because I forgot to save a file."},
+
+    { "type": "p", "text": "Or discovering that the 'bug' was my own misunderstanding."},
+
+    { "type": "p", "text": "Or finally fixing something after trying fifteen different approaches, only to wonder why the correct solution seemed so obvious afterward."},
+
+    { "type": "p", "text": "Those moments taught me something that courses rarely do:"},
+
+    { "type": "p", "text": "Technology changes quickly."},
+
+    { "type": "p", "text": "Learning how to think lasts much longer."},
+
+    { "type": "p", "text": "That's what this blog is about."},
+
+
+    { "type": "p", "text": "You'll find machine learning, deep learning, programming, things I build, mistakes I make, lessons I wish I had learned earlier, and occasionally thoughts that have nothing to do with code but everything to do with becoming a better engineer."},
+
+    { "type": "p", "text": "Outside of code, you'll probably find me watching Formula 1 on a Sunday, wondering how a pit stop can be completed in under two seconds, or staying up far too late for an NBA game. I've always been drawn to environments where tiny decisions make enormous differences. Looking back, it's not surprising that machine learning ended up becoming the field I wanted to spend my time in."},
+
+    { "type": "p", "text": "I don't want this to become another collection of tutorials that simply repeat the documentation."},
+
+    { "type": "p", "text": "If I write about something, I want it to answer the question I wish someone had answered when I was learning it."},
+
+    {"type": "p", "text": "Beyond machine learning, you'll occasionally find me writing about Formula 1, books, technology, and the ideas that shape how I approach both engineering and life."},
+    
+    { "type": "p", "text": "Some posts will be technical."},
+
+    { "type": "p", "text": "Some will be practical."},
+
+    { "type": "p", "text": "Some will probably begin with me making a mistake."},
+
+    { "type": "p", "text": "If you're someone who's still figuring things out—or even someone who's been doing this for years, I hope you find something here that makes you pause and think differently."},
+
+    { "type": "p", "text": "We're all learning."}   
+    
+
+
 
     
 
