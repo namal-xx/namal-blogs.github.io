@@ -3,5 +3,16 @@
   "tag": "Machine Learning, Self-learning",
   "date": "February 25, 2026",
   "readTime": "5 min read",
-  "cover": "images/my-first-post.jpg"
+  "cover": "images/my-first-post.jpg",
+
+"body": [
+    { "type": "h1", "text": "I Didn't Plan to End Up Here" },
+
+    { "type": "p", "text": "A few years ago, if you had asked me what I wanted to do with my life, I probably wouldn't have had a good answer."},
+
+    { "type": "p", "text": "Machine learning wasn't part of some grand plan. There wasn't a moment where everything suddenly clicked. There wasn't a movie-like realization that this is my calling." }
+
+    
+
+]
 }
